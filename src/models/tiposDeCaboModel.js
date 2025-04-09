@@ -7,7 +7,7 @@ const tiposDeCaboSchema = new mongoose.Schema({
 
 const model = mongoose.model('tiposDeCabo', tiposDeCaboSchema);
 
-class TiposDeCabo {
+class TiposDeCaboModel {
     static async listarTiposDeCabo () {
         try {
             const result = await model.find();
@@ -24,12 +24,7 @@ class TiposDeCabo {
     
     static async criarTipoDeCabo (nome, possuiCores) {
         try {
-            // TODO: mover lógica da regra de negócio para service
-            const verifyNome = await model.findOne({nome});
-            if (verifyNome) {
-                throw { erro: "Nome já existente"}
-            }
-        
+
             const result = await model.create({
                 nome, possuiCores
             })
@@ -44,7 +39,21 @@ class TiposDeCabo {
             throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
         }
     }
+    
+    static async buscarPorNome (nome) {
+        try {
+            const result = await model.findOne({nome});
+
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    }
 
 }
 
-export default TiposDeCabo
+export default TiposDeCaboModel

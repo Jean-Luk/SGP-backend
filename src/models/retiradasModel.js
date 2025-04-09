@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { pedacosModel } from "./pedacos.js";
+import { pedacosModel } from "./pedacosModel.js";
 
 const retiradasSchema = new mongoose.Schema({
     idPedaco: { type: String, required:true},
@@ -36,24 +36,13 @@ class RetiradasModel {
         }    
     }
     
-    static async criarRetirada (idPedaco, idVendedor,) {
+    static async criarRetirada (idPedaco, idVendedor, dataRetirada, pedaco) {
         try {
-            // TODO: Mover a lógica para o service;
-    
-            const pedaco = await pedacosModel.findById(idPedaco);
-            if (!pedaco) {
-                throw { erro: "Pedaço inexistente"}
-            }
-        
-            const vendedor = await vendedorModel.findById(idVendedor);
-            if (!vendedor) {
-                throw { erro: "Vendedor inexistente"}
-            }
-        
+
             const result = await model.create({
                 idPedaco,
                 idVendedor,
-                dataRetirada: Date.now()
+                dataRetirada
             })
         
             pedaco.status = "retirado";

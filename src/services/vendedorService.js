@@ -1,0 +1,91 @@
+import VendedoresModel from "../models/vendedoresModel";
+
+class VendedoresService {
+    static async listarVendedores () {
+        try {
+            const result = await VendedoresModel.listarVendedores();
+            
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao listar os vendedores"}
+
+        }
+    };
+    
+    static async buscarVendedorPorId (idVendedor) {
+        try {
+            const result = await VendedoresModel.buscarVendededorPorId(idVendedor);
+            
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar o vendedor por ID"}
+        }
+    }
+    
+    static async buscarVendedorPorCod (codVendedor) {
+        try {
+            const result = await VendedoresModel.buscarVendedorPorCod(codVendedor);
+            
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar o vendedor por código"}
+        }
+    }
+    
+    static async buscarVendedorPorNome (nome) {
+        try {
+            const result = await VendedoresModel.buscarVendedorPorNome(nome);
+            
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar o vendedor por nome"}
+        }
+
+    }
+
+    static async criarVendedor (codVendedor, nome) {
+        try {
+
+            const verifyCod = await this.buscarVendedorPorCod(codVendedor);
+            if (verifyCod) {
+                throw { erro: "Código já existente"}
+            }
+        
+            const verifyNome = await this.buscarVendedorPorNome(nome);
+            if (verifyNome) {
+                throw { erro: "Nome já existente"}
+            }
+        
+            const result = await VendedoresModel.criarVendedor(codVendedor, nome);
+        
+            return result
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao criar o vendedor"}
+        }
+    }
+
+
+}    
+
+export default VendedoresService;

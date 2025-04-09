@@ -10,7 +10,7 @@ const vendedoresSchema = new mongoose.Schema({
 const model = mongoose.model('vendedores', vendedoresSchema);
 
 class VendedoresModel {
-    static async getVendedores () {
+    static async listarVendedores () {
         try {
             const result = await model.find()
             
@@ -25,7 +25,7 @@ class VendedoresModel {
         }
     };
     
-    static async getVendededorById (idVendedor) {
+    static async buscarVendededorPorId (idVendedor) {
         try {
             const result = await model.findById(idVendedor);
             
@@ -39,7 +39,7 @@ class VendedoresModel {
         }
     }
     
-    static async getVendedorByCod (codVendedor) {
+    static async buscarVendedorPorCod (codVendedor) {
         try {
             const result = await model.findOne({codVendedor});
             
@@ -52,20 +52,23 @@ class VendedoresModel {
             throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
         }
     }
-    
-    static async createVendedor (codVendedor, nome) {
-        try {
-            // TODO: mover lógica da regra de negócio para o service
 
-            const verifyCod = await model.findOne({codVendedor});
-            if (verifyCod) {
-                throw { erro: "Código já existente"}
+    static async buscarVendedorPorNome (nome) {
+        try {
+            const result = await model.findOne({nome});
+            
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
             }
-        
-            const verifyNome = await model.findOne({nome});
-            if (verifyNome) {
-                throw { erro: "Nome já existente"}
-            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    }
+
+    static async criarVendedor (codVendedor, nome) {
+        try {
         
             const result = await model.create({
                 codVendedor,

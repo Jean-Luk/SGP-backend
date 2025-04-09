@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { tiposDeCaboModel } from "./tiposDeCabo.js";
+import { tiposDeCaboModel } from "./tiposDeCaboModel.js";
 
 const pedacosSchema = new mongoose.Schema({
     idTipo: { type: String, required:true},
@@ -25,10 +25,8 @@ class PedacosModel {
             throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
         }
     };
-    static async buscarPedacos (idTipo, tamanho, percMargem, status, idCor='') {
+    static async buscarPedacos (idTipo, tamanho, margem, status, idCor) {
         try {
-            // TODO: Mover a lógica para o service.
-            const margem = tamanho * percMargem/100;
     
             const result = await model.find({
                 idTipo,
@@ -48,23 +46,14 @@ class PedacosModel {
         }
     }
     
-    static async criarPedaco (idTipo, tamanho, idCor='') {
+    static async criarPedaco (idTipo, tamanho, idCor, status) {
         try {
-            // TODO: Mover lógica para o service.
-            const tipo = await tiposDeCaboModel.findById(idTipo);
-        
-            if (!tipo) {
-                throw { erro: "Tipo de cabo inexistente"}
-            }
-            if (tipo.possuiCores && idCor === '') {
-                throw { erro: "É necessário especificar uma cor"}
-            }
-        
+
             const result = await model.create({
                 idTipo,
                 tamanho,
                 idCor,
-                status:'guardado'
+                status
             })
         
             return result;
