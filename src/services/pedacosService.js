@@ -54,8 +54,20 @@ class PedacosService {
             }
 
             throw {erro:err.erro||"Ocorreu um erro ao criar o pedaço"}
+        }
+    }
 
+    static async buscarPedacoPorId (idPedaco) {
+        try {
+            const result = await PedacosModel.buscarPedacoPorId(idPedaco);
 
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar pedaço"}
         }
     }
 }

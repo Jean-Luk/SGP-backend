@@ -67,5 +67,20 @@ class PedacosModel {
         }
     }
 
+    static async buscarPedacoPorId (idPedaco) {
+        try {
+            const result = await model.findById(idPedaco);
+
+            return result
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    }
+
 }
 export default PedacosModel;
