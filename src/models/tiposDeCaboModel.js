@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 
 const tiposDeCaboSchema = new mongoose.Schema({
     nome: { type: String, required: true},
-    possuiCores: { type: Boolean, required:true, default:false}
+    possuiCores: { type: Boolean, required:true, default:false},
+    status: { type: String, required:true, default:"ativo"} // "ativo" ou "desativo"
 })
 
 const model = mongoose.model('tiposDeCabo', tiposDeCaboSchema);
@@ -26,7 +27,7 @@ class TiposDeCaboModel {
         try {
 
             const result = await model.create({
-                nome, possuiCores
+                nome, possuiCores, status:"ativo"
             })
         
             return result;
