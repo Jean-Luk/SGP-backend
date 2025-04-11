@@ -23,11 +23,11 @@ class TiposDeCaboModel {
         }
     };
     
-    static async criarTipoDeCabo (nome, possuiCores) {
+    static async criarTipoDeCabo (nome, possuiCores, status) {
         try {
 
             const result = await model.create({
-                nome, possuiCores, status:"ativo"
+                nome, possuiCores, status
             })
         
             return result;
@@ -44,6 +44,20 @@ class TiposDeCaboModel {
     static async buscarPorId (idTipoDeCabo) {
         try {
             const result = await model.findById(idTipoDeCabo);
+
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    }
+
+    static async buscarPorNome (nome) {
+        try {
+            const result = await model.findOne({nome});
 
             return result;
         } catch (err) {

@@ -36,11 +36,11 @@ class TiposDeCaboController {
         }
     }
 
-    static async criarPedaco (req, res) {
+    static async criarTipoDeCabo (req, res) {
         try {
-            const { idTipo, tamanho, idCor, codVendedor, pin } = req.body;
+            const { nome, possuiCores } = req.body;
 
-            const result = await PedacosService.criarPedaco(idTipo, tamanho, idCor, codVendedor, pin);
+            const result = await TiposDeCaboService.criarTipoDeCabo(nome, possuiCores);
 
             res.status(200).json(result);
 

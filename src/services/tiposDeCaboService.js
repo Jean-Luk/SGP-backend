@@ -15,6 +15,20 @@ class TiposDeCaboService {
         }
     };
     
+    static async buscarPorNome (nome) {
+        try {
+            const result = await TiposDeCaboModel.buscarPorNome(nome);
+
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar o tipo de cabo por nome"}
+        }
+    }
+
     static async buscarPorId (idTipoDeCabo) {
         try {
             
@@ -36,12 +50,14 @@ class TiposDeCaboService {
 
     static async criarTipoDeCabo (nome, possuiCores=false) {
         try {
-            const verifyNome = await this.buscarPorNome(nome);
+            const verifyNome = await this.buscarPorNome(nome);            
             if (verifyNome) {
                 throw { erro: "Nome já existente"}
             }
-        
-            const result = await TiposDeCaboModel.criarTipoDeCabo(nome, possuiCores)        
+
+            const possuiCoresBoolean = possuiCores === "true"
+
+            const result = await TiposDeCaboModel.criarTipoDeCabo(nome, possuiCoresBoolean, "ativo")        
 
             return result;
             
