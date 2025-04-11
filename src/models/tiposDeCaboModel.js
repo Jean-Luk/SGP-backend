@@ -41,9 +41,9 @@ class TiposDeCaboModel {
         }
     }
     
-    static async buscarPorNome (nome) {
+    static async buscarPorId (idTipo) {
         try {
-            const result = await model.findOne({nome});
+            const result = await model.findById(idTipo);
 
             return result;
         } catch (err) {
