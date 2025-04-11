@@ -1,6 +1,6 @@
-import EntradasModel from "../models/entradasModel";
-import PedacosService from "./pedacosService";
-import VendedoresService from "./vendedoresService";
+import EntradasModel from "../models/entradasModel.js";
+import PedacosService from "./pedacosService.js";
+import VendedoresService from "./vendedoresService.js";
 
 class EntradasService {
     static async listarEntradas () {

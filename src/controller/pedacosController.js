@@ -38,8 +38,9 @@ class PedacosController {
 
     static async criarPedaco (req, res) {
         try {
-            const { idTipo, tamanho, idCor } = req.body;
-            const result = await PedacosService.criarPedaco(idTipo, tamanho, idCor);
+            const { idTipo, tamanho, idCor, codVendedor, pin } = req.body;
+
+            const result = await PedacosService.criarPedaco(idTipo, tamanho, idCor, codVendedor, pin);
 
             res.status(200).json(result);
 

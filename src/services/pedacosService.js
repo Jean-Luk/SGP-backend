@@ -1,4 +1,7 @@
 import PedacosModel from "../models/pedacosModel.js";
+import TiposDeCaboModel from "../models/tiposDeCaboModel.js";
+import EntradasService from "./entradasService.js";
+import VendedoresService from "./vendedoresService.js";
 
 class PedacosService {
     static async listarPedacos () {
@@ -34,27 +37,41 @@ class PedacosService {
         }
     }
 
-    static async criarPedaco (idTipo, tamanho, idCor='') {
+    static async criarPedaco (idTipo, tamanho, idCor='', codVendedor, pin) {
         try {
 
-            if (!idTipo || !tamanho) {
+            if (!idTipo || !tamanho || !codVendedor || !pin) {
                 throw {erro:"Algum campo não foi especificado"}
             }
 
-            console.log(idTipo, tamanho, idCor);
-            
-            const tipo = await tiposDeCaboModel.findById(idTipo);
+            const vendedor = await VendedoresService.buscarVendedorPorCod(codVendedor);
+
+            if (!vendedor) {
+                throw {erro:"Vendedor inexistente"}
+            }
+
+            const pinVendedor = await VendedoresService.buscarPinPorId(vendedor._id);
+
+            if (pinVendedor !== pin) {
+                throw {erro:"Pin incorreto"}
+            }
+
+            const tipo = await TiposDeCaboModel.buscarPorId(idTipo);
         
             if (!tipo) {
                 throw { erro: "Tipo de cabo inexistente"}
             }
+
             if (tipo.possuiCores && idCor === '') {
                 throw { erro: "É necessário especificar uma cor"}
             }
         
             const result = await PedacosModel.criarPedaco(idTipo, tamanho, idCor, "guardado")
 
-            return result
+            const agora = Date.now();
+            const entrada = await EntradasService.criarEntrada(result._id, vendedor._id, agora)
+
+            return { result, entrada }
         } catch (err) {
             if (!err.erro) {
                 console.error("Erro no service", err);
