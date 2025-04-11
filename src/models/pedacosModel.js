@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { tiposDeCaboModel } from "./tiposDeCaboModel.js";
 
 const pedacosSchema = new mongoose.Schema({
     idTipo: { type: String, required:true},

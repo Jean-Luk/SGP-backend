@@ -1,4 +1,4 @@
-import PedacosModel from "../models/pedacosModel";
+import PedacosModel from "../models/pedacosModel.js";
 
 class PedacosService {
     static async listarPedacos () {
