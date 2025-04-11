@@ -1,4 +1,4 @@
-import VendedoresModel from "../models/vendedoresModel";
+import VendedoresModel from "../models/vendedoresModel.js";
 
 class VendedoresService {
     static async listarVendedores () {
@@ -59,8 +59,12 @@ class VendedoresService {
 
     }
 
-    static async criarVendedor (codVendedor, nome) {
+    static async criarVendedor (codVendedor, nome, pin) {
         try {
+
+            if (!codVendedor || !nome || !pin) {
+                throw { erro: "Faltam argumentos"}
+            }
 
             const verifyCod = await this.buscarVendedorPorCod(codVendedor);
             if (verifyCod) {
@@ -72,7 +76,7 @@ class VendedoresService {
                 throw { erro: "Nome já existente"}
             }
         
-            const result = await VendedoresModel.criarVendedor(codVendedor, nome);
+            const result = await VendedoresModel.criarVendedor(codVendedor, nome, pin);
         
             return result
 

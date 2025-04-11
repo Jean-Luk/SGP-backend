@@ -4,7 +4,8 @@ const vendedoresSchema = new mongoose.Schema({
     codVendedor: { type: Number, required:true},
     nome: { type: String, required:true},
     totalRetiradas: { type: Number, required:true, default:0 },
-    totalAdicoes: { type: Number, required:true, default:0 }
+    totalAdicoes: { type: Number, required:true, default:0 },
+    pin: { type: String, required:true}
 })
 
 const model = mongoose.model('vendedores', vendedoresSchema);
@@ -12,7 +13,7 @@ const model = mongoose.model('vendedores', vendedoresSchema);
 class VendedoresModel {
     static async listarVendedores () {
         try {
-            const result = await model.find()
+            const result = await model.find({}, {pin:0})
             
             return result;
         } catch (err) {
@@ -27,7 +28,7 @@ class VendedoresModel {
     
     static async buscarVendededorPorId (idVendedor) {
         try {
-            const result = await model.findById(idVendedor);
+            const result = await model.findById(idVendedor, {pin:0});
             
             return result;
         } catch (err) {
@@ -41,7 +42,7 @@ class VendedoresModel {
     
     static async buscarVendedorPorCod (codVendedor) {
         try {
-            const result = await model.findOne({codVendedor});
+            const result = await model.findOne({codVendedor}, {pin:0});
             
             return result;
         } catch (err) {
@@ -55,7 +56,7 @@ class VendedoresModel {
 
     static async buscarVendedorPorNome (nome) {
         try {
-            const result = await model.findOne({nome});
+            const result = await model.findOne({nome}, {pin:0});
             
             return result;
         } catch (err) {
@@ -67,12 +68,13 @@ class VendedoresModel {
         }
     }
 
-    static async criarVendedor (codVendedor, nome) {
+    static async criarVendedor (codVendedor, nome, pin) {
         try {
         
             const result = await model.create({
                 codVendedor,
-                nome
+                nome,
+                pin
             })
         
             return result
