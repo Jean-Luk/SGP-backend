@@ -1,0 +1,60 @@
+import TiposDeCaboService from "../services/tiposDeCaboService.js";
+
+class TiposDeCaboController {
+    static async listarTiposDeCabo (req, res) {
+        try {
+            const result = await TiposDeCaboService.listarTiposDeCabo();
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error(err)
+                res.status(500).json({"erro":"Erro interno no servidor"})
+                return
+            }
+
+            res.status(400).json({"erro":err.erro})
+        }
+    }
+
+    static async buscarTipoDeCabo (req, res) {
+        try {
+            const idTipoDeCabo = req.params.id;
+            const result = await TiposDeCaboService.buscarPorId(idTipoDeCabo);
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error(err)
+                res.status(500).json({"erro":"Erro interno no servidor"})
+                return
+            }
+
+            res.status(400).json({"erro":err.erro})
+        }
+    }
+
+    static async criarPedaco (req, res) {
+        try {
+            const { idTipo, tamanho, idCor, codVendedor, pin } = req.body;
+
+            const result = await PedacosService.criarPedaco(idTipo, tamanho, idCor, codVendedor, pin);
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error(err)
+                res.status(500).json({"erro":"Erro interno no servidor"})
+                return
+            }
+
+            res.status(400).json({"erro":err.erro})
+        }
+    }
+
+}
+
+export default TiposDeCaboController;

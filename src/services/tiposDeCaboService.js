@@ -1,4 +1,4 @@
-import TiposDeCaboModel from "../models/tiposDeCaboModel";
+import TiposDeCaboModel from "../models/tiposDeCaboModel.js";
 
 class TiposDeCaboService {
     static async listarTiposDeCabo () {
@@ -15,9 +15,14 @@ class TiposDeCaboService {
         }
     };
     
-    static async buscarPorNome (nome) {
+    static async buscarPorId (idTipoDeCabo) {
         try {
-            const result = await TiposDeCaboModel.buscarPorNome(nome);
+            
+            if(!idTipoDeCabo) {
+                throw {erro:"ID não especificado"}
+            }
+
+            const result = await TiposDeCaboModel.buscarPorId(idTipoDeCabo);
 
             return result;
         } catch (err) {
