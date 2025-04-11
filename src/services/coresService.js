@@ -55,4 +55,4 @@ class CoresService {
 
 }    
 
-export default CoresModel;
+export default CoresService;
