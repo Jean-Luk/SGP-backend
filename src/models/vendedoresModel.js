@@ -88,6 +88,20 @@ class VendedoresModel {
         }
     }
 
+        static async buscarPinPorId (idVendedor) {
+            try {
+                const query = await model.findById(idVendedor, {pin:1});
+    
+                return query.pin;
+            } catch (err) {
+                if (!err.erro) {
+                    console.error("Erro no model", err);
+                }
+    
+                throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+            }
+        }
+    
 
 }    
 

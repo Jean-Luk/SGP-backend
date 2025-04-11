@@ -89,6 +89,19 @@ class VendedoresService {
         }
     }
 
+    static async buscarPinPorId (idVendedor) {
+        try {
+            const result = await VendedoresModel.buscarPinPorId(idVendedor);
+
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar o pin do vendedor"}
+        }
+    }
 
 }    
 
