@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const entradasSchema = new mongoose.Schema({
     idPedaco: { type: String, required:true},
-    codVendedor: { type: Number, required:true},
+    idVendedor: { type: String, required:true},
     dataEntrada: { type: Number, required: true},
 })
 
