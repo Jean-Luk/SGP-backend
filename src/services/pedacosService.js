@@ -1,5 +1,6 @@
 import PedacosModel from "../models/pedacosModel.js";
 import TiposDeCaboModel from "../models/tiposDeCaboModel.js";
+import CoresService from "./coresService.js";
 import EntradasService from "./entradasService.js";
 import VendedoresService from "./vendedoresService.js";
 
@@ -62,8 +63,12 @@ class PedacosService {
                 throw { erro: "Tipo de cabo inexistente"}
             }
 
-            if (tipo.possuiCores && idCor === '') {
-                throw { erro: "É necessário especificar uma cor"}
+            if (tipo.possuiCores) {
+                const cor = CoresService.buscarCorPorId(idCor)
+                if (!cor) {
+                    throw { erro: "Especifique uma cor válida"}                    
+                }
+                
             }
         
             const result = await PedacosModel.criarPedaco(idTipo, tamanho, idCor, "guardado")
