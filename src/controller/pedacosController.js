@@ -17,6 +17,43 @@ class PedacosController {
             res.status(400).json({"erro":err.erro})
         }
     }
+
+    static async buscarPedaco (req, res) {
+        try {
+            const idPedaco = req.params.id;
+            const result = await PedacosService.buscarPedacoPorId(idPedaco);
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error(err)
+                res.status(500).json({"erro":"Erro interno no servidor"})
+                return
+            }
+
+            res.status(400).json({"erro":err.erro})
+        }
+    }
+
+    static async criarPedaco (req, res) {
+        try {
+            const { idTipo, tamanho, idCor } = req.body;
+            const result = await PedacosService.criarPedaco(idTipo, tamanho, idCor);
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error(err)
+                res.status(500).json({"erro":"Erro interno no servidor"})
+                return
+            }
+
+            res.status(400).json({"erro":err.erro})
+        }
+    }
+
 }
 
 export default PedacosController;

@@ -36,6 +36,13 @@ class PedacosService {
 
     static async criarPedaco (idTipo, tamanho, idCor='') {
         try {
+
+            if (!idTipo || !tamanho) {
+                throw {erro:"Algum campo não foi especificado"}
+            }
+
+            console.log(idTipo, tamanho, idCor);
+            
             const tipo = await tiposDeCaboModel.findById(idTipo);
         
             if (!tipo) {
