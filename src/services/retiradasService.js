@@ -59,7 +59,7 @@ class RetiradasService {
 
     static async buscarRetiradaPorId (idRetirada) {
         try {
-            if (!idRetirada || idRetirada.length !== 24) {
+            if (!idRetirada || String(idRetirada).length !== 24) {
                 throw {erro:"ID da retirada não especificado ou inválido"}
             }
 

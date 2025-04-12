@@ -59,7 +59,7 @@ class EntradasService {
 
         static async buscarEntradaPorId (idEntrada) {
             try {
-                if (!idEntrada || idEntrada.length !== 24) {
+                if (!idEntrada || String(idEntrada).length !== 24) {
                     throw {erro:"ID da entrada não especificado ou inválido"}
                 }
     

@@ -32,7 +32,7 @@ class TiposDeCaboService {
     static async buscarTipoPorId (idTipoDeCabo) {
         try {
             
-            if(!idTipoDeCabo || idTipoDeCabo.length !== 24) {
+            if(!idTipoDeCabo || String(idTipoDeCabo).length !== 24) {
                 throw {erro:"ID do tipo não especificado ou inválido"}
             }
 
