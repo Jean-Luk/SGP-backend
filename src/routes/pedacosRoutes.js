@@ -4,7 +4,7 @@ import PedacosController from '../controller/pedacosController.js';
 const router = express.Router();
 
 router.get('/listar', PedacosController.listarPedacos)
-router.get('/:id', PedacosController.buscarPedaco)
+router.get('/buscar/:id', PedacosController.buscarPedaco)
 router.post('/criar', PedacosController.criarPedaco)
 
 export default router;

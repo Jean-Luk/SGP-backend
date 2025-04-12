@@ -60,7 +60,7 @@ class RetiradasService {
     static async buscarRetiradaPorId (idRetirada) {
         try {
             if (!idRetirada || idRetirada.length !== 24) {
-                throw {erro:"ID não especificado"}
+                throw {erro:"ID não especificado ou inválido"}
             }
 
             const result = await RetiradasModel.buscarRetiradaPorId(idRetirada);

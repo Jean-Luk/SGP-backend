@@ -32,8 +32,8 @@ class TiposDeCaboService {
     static async buscarPorId (idTipoDeCabo) {
         try {
             
-            if(!idTipoDeCabo) {
-                throw {erro:"ID não especificado"}
+            if(!idTipoDeCabo || idTipoDeCabo.length !== 24) {
+                throw {erro:"ID não especificado ou inválido"}
             }
 
             const result = await TiposDeCaboModel.buscarPorId(idTipoDeCabo);

@@ -88,6 +88,11 @@ class PedacosService {
 
     static async buscarPedacoPorId (idPedaco) {
         try {
+
+            if(!idPedaco || idPedaco.length !== 24) {
+                throw {erro:"ID não especificado ou inválido"}
+            }
+
             const result = await PedacosModel.buscarPedacoPorId(idPedaco);
 
             return result;
