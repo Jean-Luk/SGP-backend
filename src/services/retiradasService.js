@@ -1,6 +1,6 @@
-import RetiradasModel from "../models/retiradasModel";
-import PedacosService from "./pedacosService";
-import VendedorService from "./vendedorService";
+import RetiradasModel from "../models/retiradasModel.js";
+import PedacosService from "./pedacosService.js";
+import VendedorService from "./vendedoresService.js";
 
 class RetiradasService {
     static async listarRetiradas () {
@@ -55,6 +55,24 @@ class RetiradasService {
 
             throw {erro:err.erro||"Ocorreu um erro ao criar a retirada"}
         }
+    }
+
+    static async buscarRetiradaPorId (idRetirada) {
+        try {
+            if (!idRetirada || idRetirada.length !== 24) {
+                throw {erro:"ID não especificado"}
+            }
+
+            const result = await RetiradasModel.buscarRetiradaPorId(idRetirada);
+            return result;
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar as retiradas"}
+        }    
     }
 
 }

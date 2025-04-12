@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { pedacosModel } from "./pedacosModel.js";
 
 const retiradasSchema = new mongoose.Schema({
     idPedaco: { type: String, required:true},
@@ -58,6 +57,20 @@ class RetiradasModel {
             throw {erro:err.erro||"Ocorreu um erro ao inserir no banco de dados"}
         }
     }
+
+    static async buscarRetiradaPorId (idRetirada) {
+        try {
+            const result = await model.findById(idRetirada)
+
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    };
 
 }
 
