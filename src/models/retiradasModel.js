@@ -35,7 +35,7 @@ class RetiradasModel {
         }    
     }
     
-    static async criarRetirada (idPedaco, idVendedor, dataRetirada, pedaco) {
+    static async criarRetirada (idPedaco, idVendedor, dataRetirada) {
         try {
 
             const result = await model.create({
@@ -43,10 +43,7 @@ class RetiradasModel {
                 idVendedor,
                 dataRetirada
             })
-        
-            pedaco.status = "retirado";
-            pedaco.save();
-        
+                
             return result;
 
         } catch (err) {

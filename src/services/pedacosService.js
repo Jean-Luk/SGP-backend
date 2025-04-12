@@ -1,8 +1,10 @@
+import mongoose from "mongoose";
 import PedacosModel from "../models/pedacosModel.js";
 import TiposDeCaboModel from "../models/tiposDeCaboModel.js";
 import CoresService from "./coresService.js";
 import EntradasService from "./entradasService.js";
 import VendedoresService from "./vendedoresService.js";
+import RetiradasService from "./retiradasService.js";
 
 class PedacosService {
     static async listarPedacos () {
@@ -119,6 +121,63 @@ class PedacosService {
             throw {erro:err.erro||"Ocorreu um erro ao buscar pedaço"}
         }
     }
+
+    static async retirarPedaco (idPedaco, codVendedor, pin) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+        try {
+
+            if (!codVendedor || !pin ) {
+                throw {erro:"Algum argumento não foi especificado"}
+            }
+
+            if (!idPedaco || String(idPedaco).length !== 24) {
+                throw {erro:"ID do pedaço não especificado ou inválido"}
+            }
+
+            const pedaco = await PedacosModel.buscarPedacoPorId(idPedaco);
+
+            if(!pedaco) {
+                throw {erro:"Pedaço inexistente"}
+            }
+
+            if(pedaco.status !== "guardado") {
+                throw {erro:"Pedaço já retirado"}
+            }
+
+            const vendedor = await VendedoresService.buscarVendedorPorCod(codVendedor);
+
+            if (!vendedor) {
+                throw {erro:"Vendedor inexistente"}
+            }
+
+            const pinVendedor = await VendedoresService.buscarPinPorId(vendedor._id);
+
+            if (pinVendedor !== pin) {
+                throw {erro:"Pin incorreto"}
+            }
+        
+            const result = await PedacosModel.retirarPedaco(pedaco, session)
+
+            const retirada = await RetiradasService.criarRetirada(pedaco._id, vendedor._id)
+
+            await session.commitTransaction();
+            return { result, retirada }
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            await session.abortTransaction();
+            throw {erro:err.erro||"Ocorreu um erro ao criar o pedaço"}
+
+        } finally {
+            session.endSession();
+
+        }
+    }
+
 }
 
 export default PedacosService;

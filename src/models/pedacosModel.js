@@ -81,5 +81,23 @@ class PedacosModel {
         }
     }
 
+    static async retirarPedaco (idPedaco, session=null) {
+        try {
+            const pedaco = await model.findById(idPedaco);
+
+            pedaco.status = "retirado"
+            await pedaco.save({ session });
+
+            return pedaco
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    }
+
 }
 export default PedacosModel;

@@ -32,19 +32,19 @@ class RetiradasService {
     static async criarRetirada (idPedaco, idVendedor) {
         try {
 
-            const pedaco = await PedacosService.buscarPorId(idPedaco);
+            const pedaco = await PedacosService.buscarPedacoPorId(idPedaco);
             if (!pedaco) {
                 throw { erro: "Pedaço inexistente"}
             }
         
-            const vendedor = await VendedorService.buscarPorId(idVendedor);
+            const vendedor = await VendedorService.buscarVendedorPorId(idVendedor);
             if (!vendedor) {
                 throw { erro: "Vendedor inexistente"}
             }
         
             const dataRetirada = Date.now();
 
-            const result = await RetiradasModel.criarRetirada(idPedaco, idVendedor, dataRetirada, pedaco);
+            const result = await RetiradasModel.criarRetirada(idPedaco, idVendedor, dataRetirada);
         
             return result;
 
