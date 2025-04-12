@@ -17,7 +17,7 @@ class EntradasService {
         }
     };
     
-    static async buscarEntrada (idPedaco, idVendedor, dataInicio, dataFim) {
+    static async buscarEntradas (idPedaco, idVendedor, dataInicio, dataFim) {
         try {
             const result = await EntradasModel.buscarEntrada(idPedaco, idVendedor, dataInicio, dataFim);
 
@@ -57,6 +57,24 @@ class EntradasService {
         }
     }
 
+        static async buscarEntradaPorId (idEntrada) {
+            try {
+                if (!idEntrada || idEntrada.length !== 24) {
+                    throw {erro:"ID não especificado ou inválido"}
+                }
+    
+                const result = await EntradasModel.buscarEntradaPorId(idEntrada);
+                return result;
+    
+            } catch (err) {
+                if (!err.erro) {
+                    console.error("Erro no service", err);
+                }
+    
+                throw {erro:err.erro||"Ocorreu um erro ao buscar as entradas"}
+            }    
+        }
+    
 }
 
 export default EntradasService;

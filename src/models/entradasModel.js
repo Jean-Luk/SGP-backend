@@ -23,7 +23,7 @@ class EntradasModel {
         }
     };
     
-    static async buscarEntrada (idPedaco, idVendedor, dataInicio, dataFim) {
+    static async buscarEntradas (idPedaco, idVendedor, dataInicio, dataFim) {
         try {
 
         } catch (err) {
@@ -54,6 +54,20 @@ class EntradasModel {
             throw {erro:err.erro||"Ocorreu um erro ao inserir no banco de dados"}
         }
     }
+
+    static async buscarEntradaPorId (idEntrada) {
+        try {
+            const result = await model.findById(idEntrada)
+
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    };
 
 }
 
