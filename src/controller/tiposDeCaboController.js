@@ -21,7 +21,7 @@ class TiposDeCaboController {
     static async buscarTipoDeCabo (req, res) {
         try {
             const idTipoDeCabo = req.params.id;
-            const result = await TiposDeCaboService.buscarPorId(idTipoDeCabo);
+            const result = await TiposDeCaboService.buscarTipoPorId(idTipoDeCabo);
 
             res.status(200).json(result);
 

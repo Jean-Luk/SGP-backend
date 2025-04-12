@@ -105,7 +105,7 @@ class PedacosService {
         try {
 
             if(!idPedaco || String(idPedaco).length !== 24) {
-                throw {erro:"ID não especificado ou inválido"}
+                throw {erro:"ID do pedaço não especificado ou inválido"}
             }
 
             const result = await PedacosModel.buscarPedacoPorId(idPedaco);

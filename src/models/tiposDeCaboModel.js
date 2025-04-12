@@ -41,7 +41,7 @@ class TiposDeCaboModel {
         }
     }
     
-    static async buscarPorId (idTipoDeCabo) {
+    static async buscarTipoPorId (idTipoDeCabo) {
         try {
             const result = await model.findById(idTipoDeCabo);
 

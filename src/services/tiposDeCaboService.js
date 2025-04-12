@@ -29,14 +29,14 @@ class TiposDeCaboService {
         }
     }
 
-    static async buscarPorId (idTipoDeCabo) {
+    static async buscarTipoPorId (idTipoDeCabo) {
         try {
             
             if(!idTipoDeCabo || idTipoDeCabo.length !== 24) {
-                throw {erro:"ID não especificado ou inválido"}
+                throw {erro:"ID do tipo não especificado ou inválido"}
             }
 
-            const result = await TiposDeCaboModel.buscarPorId(idTipoDeCabo);
+            const result = await TiposDeCaboModel.buscarTipoPorId(idTipoDeCabo);
 
             return result;
         } catch (err) {

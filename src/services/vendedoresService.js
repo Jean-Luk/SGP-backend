@@ -18,8 +18,8 @@ class VendedoresService {
     
     static async buscarVendedorPorId (idVendedor) {
         try {
-            if (!idVendedor || idVendedor.length !== 24) {
-                throw {erro:"ID não especificado ou inválido"}
+            if (!idVendedor || String(idVendedor).length !== 24) {
+                throw {erro:"ID do vendedor não especificado ou inválido"}
             }
 
             const result = await VendedoresModel.buscarVendededorPorId(idVendedor);

@@ -60,7 +60,7 @@ class EntradasService {
         static async buscarEntradaPorId (idEntrada) {
             try {
                 if (!idEntrada || idEntrada.length !== 24) {
-                    throw {erro:"ID não especificado ou inválido"}
+                    throw {erro:"ID da entrada não especificado ou inválido"}
                 }
     
                 const result = await EntradasModel.buscarEntradaPorId(idEntrada);
