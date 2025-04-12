@@ -56,6 +56,9 @@ class PedacosService {
     }
 
     static async criarPedaco (idTipo, tamanho, idCor='', codVendedor, pin) {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
         try {
 
             if (!idTipo || !tamanho || !codVendedor || !pin) {
@@ -74,7 +77,7 @@ class PedacosService {
                 throw {erro:"Pin incorreto"}
             }
 
-            const tipo = await TiposDeCaboModel.buscarPorId(idTipo);
+            const tipo = await TiposDeCaboModel.buscarTipoPorId(idTipo);
         
             if (!tipo) {
                 throw { erro: "Tipo de cabo inexistente"}
@@ -88,18 +91,24 @@ class PedacosService {
                 
             }
         
-            const result = await PedacosModel.criarPedaco(idTipo, tamanho, idCor, "guardado")
+            const result = await PedacosModel.criarPedaco(idTipo, tamanho, idCor, "guardado", session)
 
             const agora = Date.now();
-            const entrada = await EntradasService.criarEntrada(result._id, vendedor._id, agora)
+            const entrada = await EntradasService.criarEntrada(result._id, vendedor._id, agora, session)
 
+            await session.commitTransaction();
             return { result, entrada }
         } catch (err) {
             if (!err.erro) {
                 console.error("Erro no service", err);
             }
 
+            await session.abortTransaction();
             throw {erro:err.erro||"Ocorreu um erro ao criar o pedaço"}
+
+        } finally {
+            session.endSession();
+
         }
     }
 
@@ -160,7 +169,7 @@ class PedacosService {
         
             const result = await PedacosModel.retirarPedaco(pedaco, session)
 
-            const retirada = await RetiradasService.criarRetirada(pedaco._id, vendedor._id)
+            const retirada = await RetiradasService.criarRetirada(pedaco._id, vendedor._id, session)
 
             await session.commitTransaction();
             return { result, retirada }

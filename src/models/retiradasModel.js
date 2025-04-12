@@ -35,14 +35,14 @@ class RetiradasModel {
         }    
     }
     
-    static async criarRetirada (idPedaco, idVendedor, dataRetirada) {
+    static async criarRetirada (idPedaco, idVendedor, dataRetirada, session=null) {
         try {
 
-            const result = await model.create({
+            const result = await model.create([{
                 idPedaco,
                 idVendedor,
                 dataRetirada
-            })
+            }], { session })
                 
             return result;
 

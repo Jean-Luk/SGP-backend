@@ -35,14 +35,14 @@ class EntradasModel {
         }    
     }
     
-    static async criarEntrada (idPedaco, idVendedor, dataEntrada) {
+    static async criarEntrada (idPedaco, idVendedor, dataEntrada, session=null) {
         try {
 
-            const result = await model.create({
+            const result = await model.create([{
                 idPedaco,
                 idVendedor,
                 dataEntrada
-            })
+            }], { session })
         
             return result;
 

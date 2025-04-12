@@ -31,7 +31,7 @@ class EntradasService {
         }    
     }
     
-    static async criarEntrada (idPedaco, idVendedor, dataEntrada) {
+    static async criarEntrada (idPedaco, idVendedor, dataEntrada, session=null) {
         try {
 
             const verificarVendedor = await VendedoresService.buscarVendedorPorId(idVendedor);
@@ -39,12 +39,7 @@ class EntradasService {
                 throw {erro:"Vendedor inexistente"}
             }
 
-            const verificarPedaco = await PedacosService.buscarPedacoPorId(idPedaco);
-            if (!verificarPedaco) {
-                throw {erro:"Pedaço inexistente"}
-            }
-
-            const result = await EntradasModel.criarEntrada(idPedaco, idVendedor, dataEntrada);
+            const result = await EntradasModel.criarEntrada(idPedaco, idVendedor, dataEntrada, session);
         
             return result;
 

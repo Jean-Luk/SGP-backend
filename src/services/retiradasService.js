@@ -29,7 +29,7 @@ class RetiradasService {
         }    
     }
     
-    static async criarRetirada (idPedaco, idVendedor) {
+    static async criarRetirada (idPedaco, idVendedor, session=null) {
         try {
 
             const pedaco = await PedacosService.buscarPedacoPorId(idPedaco);
@@ -44,7 +44,7 @@ class RetiradasService {
         
             const dataRetirada = Date.now();
 
-            const result = await RetiradasModel.criarRetirada(idPedaco, idVendedor, dataRetirada);
+            const result = await RetiradasModel.criarRetirada(idPedaco, idVendedor, dataRetirada, session);
         
             return result;
 

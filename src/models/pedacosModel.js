@@ -45,17 +45,17 @@ class PedacosModel {
         }
     }
     
-    static async criarPedaco (idTipo, tamanho, idCor, status) {
+    static async criarPedaco (idTipo, tamanho, idCor, status, session=null) {
         try {
 
-            const result = await model.create({
+            const result = await model.create([{
                 idTipo,
                 tamanho,
                 idCor,
                 status
-            })
+            }], { session })
         
-            return result;
+            return result[0];
             
         } catch (err) {
             if (!err.erro) {
