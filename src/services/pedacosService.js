@@ -25,7 +25,7 @@ class PedacosService {
     static async buscarPedacos (idTipo, tamanho, percMargem, status, idCor='') {
         try {
 
-            if (!idTipo || !tamanho || !percMargem || !status || !idCor) {
+            if (!idTipo || !tamanho || !percMargem || !status ) {
                 throw {erro:"Algum argumento não foi especificado"}
             }
 
