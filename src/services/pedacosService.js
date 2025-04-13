@@ -89,6 +89,8 @@ class PedacosService {
                     throw { erro: "Especifique uma cor válida"}                    
                 }
                 
+            } else {
+                idCor = '';
             }
         
             const result = await PedacosModel.criarPedaco(idTipo, tamanho, idCor, "guardado", session)
