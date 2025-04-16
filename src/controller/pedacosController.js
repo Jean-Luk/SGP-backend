@@ -20,9 +20,9 @@ class PedacosController {
 
     static async buscarPedacos (req, res) {
         try {
-            const {idTipo, tamanho, percMargem, status="guardado", idCor} = req.body;
+            const {idTipo, tamanho, percMargem, margem, status="guardado", idCor} = req.body;
             
-            const result = await PedacosService.buscarPedacos(idTipo, tamanho, percMargem, status, idCor);
+            const result = await PedacosService.buscarPedacos(idTipo, tamanho, percMargem, margem, status, idCor);
 
             res.status(200).json(result);
 

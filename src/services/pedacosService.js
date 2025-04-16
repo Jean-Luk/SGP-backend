@@ -22,15 +22,19 @@ class PedacosService {
         }
     }
 
-    static async buscarPedacos (idTipo, tamanho, percMargem, status, idCor='') {
+    static async buscarPedacos (idTipo, tamanho, percMargem=0, margem=0, status, idCor='') {
         try {
 
-            if (!idTipo || !tamanho || !percMargem || !status ) {
+            if (!idTipo || !tamanho || !status ) {
                 throw {erro:"Algum argumento não foi especificado"}
             }
 
-            const numberPercMargem = Number(percMargem)
-            if(isNaN(numberPercMargem) || numberPercMargem < 0) {
+            // const numberPercMargem = Number(percMargem)
+            // if(isNaN(numberPercMargem) || numberPercMargem < 0) {
+            //     throw {erro:"Margem especificada é inválida"}
+            // }
+            const numberMargem = Number(margem)
+            if(isNaN(numberMargem) || numberMargem < 0) {
                 throw {erro:"Margem especificada é inválida"}
             }
 
@@ -38,10 +42,8 @@ class PedacosService {
             if(isNaN(numberTamanho) || numberTamanho < 0) {
                 throw {erro:"Tamanho especificado é inválido"}
             }
-
-            const margem = numberTamanho * numberPercMargem/100;
             
-            const result = await PedacosModel.buscarPedacos(idTipo, numberTamanho, margem, status, idCor)
+            const result = await PedacosModel.buscarPedacos(idTipo, numberTamanho, numberMargem, status, idCor)
 
             return result;
         } catch (err) {
