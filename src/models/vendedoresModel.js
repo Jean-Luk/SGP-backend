@@ -88,20 +88,53 @@ class VendedoresModel {
         }
     }
 
-        static async buscarPinPorId (idVendedor) {
-            try {
-                const query = await model.findById(idVendedor, {pin:1});
-    
-                return query.pin;
-            } catch (err) {
-                if (!err.erro) {
-                    console.error("Erro no model", err);
-                }
-    
-                throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+    static async buscarPinPorId (idVendedor) {
+        try {
+            const query = await model.findById(idVendedor, {pin:1});
+
+            return query.pin;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
             }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
         }
-    
+    }
+
+    static async incrementarRetiradas (idVendedor, session=null) {
+        try {
+            const vendedor = await model.findById(idVendedor);
+            vendedor.totalRetiradas += 1;
+            await vendedor.save({ session });
+
+            return vendedor;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    }
+
+    static async incrementarAdicoes (idVendedor, session=null) {
+        try {
+            const vendedor = await model.findById(idVendedor);
+            vendedor.totalAdicoes += 1;
+            await vendedor.save({ session });
+
+            return vendedor;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no model", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar no banco de dados"}
+        }
+    }
+
+        
 
 }    
 

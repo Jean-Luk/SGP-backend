@@ -97,6 +97,7 @@ class PedacosService {
 
             const agora = Date.now();
             const entrada = await EntradasService.criarEntrada(result._id, vendedor._id, agora, session)
+            const incremento = await VendedoresService.incrementarAdicoes(vendedor._id, session);
 
             await session.commitTransaction();
             return { result, entrada }
@@ -172,6 +173,7 @@ class PedacosService {
             const result = await PedacosModel.retirarPedaco(pedaco, session)
 
             const retirada = await RetiradasService.criarRetirada(pedaco._id, vendedor._id, session)
+            const incremento = await VendedoresService.incrementarRetiradas(vendedor._id, session);
 
             await session.commitTransaction();
             return { result, retirada }

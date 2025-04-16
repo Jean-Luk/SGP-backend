@@ -107,6 +107,44 @@ class VendedoresService {
         }
     }
 
+    static async incrementarRetiradas (idVendedor, session=null) {
+        try {
+            if (!idVendedor || String(idVendedor).length !== 24) {
+                throw {erro:"ID do vendedor não especificado ou inválido"}
+            }
+
+            const result = await VendedoresModel.incrementarRetiradas(idVendedor, session);
+
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar o pin do vendedor"}
+        }
+
+    }
+
+    static async incrementarAdicoes (idVendedor, session=null) {
+        try {
+            if (!idVendedor || String(idVendedor).length !== 24) {
+                throw {erro:"ID do vendedor não especificado ou inválido"}
+            }
+
+            const result = await VendedoresModel.incrementarAdicoes(idVendedor, session);
+
+            return result;
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar o pin do vendedor"}
+        }
+
+    }
+
 }    
 
 export default VendedoresService;
