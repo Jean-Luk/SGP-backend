@@ -7,9 +7,9 @@ import VendedoresService from "./vendedoresService.js";
 import RetiradasService from "./retiradasService.js";
 
 class PedacosService {
-    static async listarPedacos () {
+    static async listarPedacos (limite=25) {
         try {
-            const result = await PedacosModel.listarPedacos();
+            const result = await PedacosModel.listarPedacos(limite);
 
             return result;
         } catch (err) {

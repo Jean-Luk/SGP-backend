@@ -5,15 +5,15 @@ const pedacosSchema = new mongoose.Schema({
     tamanho: { type: Number, required: true},
     idCor: { type: String, required:false},
     status: { type: String, required:true} // guardado, retirado
-})
+}, { timestamps: true });
 
 const model = mongoose.model('pedacos', pedacosSchema);
 
 class PedacosModel {
 
-    static async listarPedacos () {
+    static async listarPedacos (limite) {
         try {
-            const result = await model.find()
+            const result = await model.find().sort({ createdAt: -1, _id: -1}).limit(limite);
 
             return result;
         } catch (err) {
@@ -27,12 +27,14 @@ class PedacosModel {
     static async buscarPedacos (idTipo, tamanho, margem, status, idCor) {
         try {
     
-            const result = await model.find({
+            const result = await model
+            .find({
                 idTipo,
                 tamanho: { $gte: (tamanho-margem), $lte: (tamanho+margem)},
                 idCor: { $regex: idCor},
                 status: { $regex: status }
             })
+            .sort({ createdAt: -1, _id: -1})
         
             return result;
     
