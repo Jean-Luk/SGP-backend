@@ -52,23 +52,41 @@ class EntradasService {
         }
     }
 
-        static async buscarEntradaPorId (idEntrada) {
-            try {
-                if (!idEntrada || String(idEntrada).length !== 24) {
-                    throw {erro:"ID da entrada não especificado ou inválido"}
-                }
-    
-                const result = await EntradasModel.buscarEntradaPorId(idEntrada);
-                return result;
-    
-            } catch (err) {
-                if (!err.erro) {
-                    console.error("Erro no service", err);
-                }
-    
-                throw {erro:err.erro||"Ocorreu um erro ao buscar as entradas"}
-            }    
-        }
+    static async buscarEntradaPorId (idEntrada) {
+        try {
+            if (!idEntrada || String(idEntrada).length !== 24) {
+                throw {erro:"ID da entrada não especificado ou inválido"}
+            }
+
+            const result = await EntradasModel.buscarEntradaPorId(idEntrada);
+            return result;
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar as entradas"}
+        }    
+    }
+
+    static async buscarEntradaPorIdPedaco (idPedaco) {
+        try {
+            if (!idPedaco || String(idPedaco).length !== 24) {
+                throw {erro:"ID do pedaço não especificado ou inválido"}
+            }
+
+            const result = await EntradasModel.buscarEntradaPorIdPedaco(idPedaco);
+            return result;
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar as entradas"}
+        }    
+    }
     
 }
 

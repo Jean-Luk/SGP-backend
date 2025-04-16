@@ -36,6 +36,24 @@ class EntradasController {
         }
     }
 
+    static async buscarEntradaPorIdPedaco (req, res) {
+        try {
+            const idPedaco = req.params.id;
+            const result = await EntradasService.buscarEntradaPorIdPedaco(idPedaco);
+
+            res.status(200).json(result);
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error(err)
+                res.status(500).json({"erro":"Erro interno no servidor"})
+                return
+            }
+
+            res.status(400).json({"erro":err.erro})
+        }
+    }
+
 }
 
 export default EntradasController;

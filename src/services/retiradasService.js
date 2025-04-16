@@ -75,6 +75,24 @@ class RetiradasService {
         }    
     }
 
+    static async buscarRetiradaPorIdPedaco (idPedaco) {
+        try {
+            if (!idPedaco || String(idPedaco).length !== 24) {
+                throw {erro:"ID do pedaço não especificado ou inválido"}
+            }
+
+            const result = await RetiradasModel.buscarRetiradaPorIdPedaco(idPedaco);
+            return result;
+
+        } catch (err) {
+            if (!err.erro) {
+                console.error("Erro no service", err);
+            }
+
+            throw {erro:err.erro||"Ocorreu um erro ao buscar as retiradas"}
+        }    
+    }
+
 }
 
 export default RetiradasService;
